@@ -8,14 +8,9 @@
 import UIKit
 import SnapKit
 
-final class SimpleListViewController: UIViewController {
-    
-    enum Section: CaseIterable {
-        case main
-        case sub
-    }
+final class SimpleListViewController: UIViewController { 
 
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
+    private var dataSource: UICollectionViewDiffableDataSource<Section, PracticeItem>! = nil
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         view.delegate = self
@@ -34,18 +29,18 @@ extension SimpleListViewController {
     
     private func configureDataSource() {
         
-        let cellRegistration = UICollectionView.CellRegistration<AllTypeCell, Item> { (cell, indexPath, item) in
+        let cellRegistration = UICollectionView.CellRegistration<AllTypeCell, PracticeItem> { (cell, indexPath, item) in
             cell.configureData(with: item)
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, identifier: Item) -> AllTypeCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, PracticeItem>(collectionView: collectionView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, identifier: PracticeItem) -> AllTypeCell? in
             
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: identifier)
         }
         
         // initial data
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, PracticeItem>()
         snapshot.appendSections(Section.allCases)
         snapshot.appendItems(Dummy.items, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: false)
@@ -57,11 +52,11 @@ extension SimpleListViewController {
     
     @objc private func plusButtonClicked() {
         var currentSnapshot = dataSource.snapshot()
-        currentSnapshot.appendItems([Item.typeA(.init(name: "New A"))], toSection: .sub)
+        currentSnapshot.appendItems([PracticeItem.typeA(.init(name: "New A"))], toSection: .sub)
         dataSource.apply(currentSnapshot, animatingDifferences: true)
     }
     
-    private func deleteItem(_ item: Item) {
+    private func deleteItem(_ item: PracticeItem) {
         var currentSnapshot = dataSource.snapshot()
         currentSnapshot.deleteItems([item])
         dataSource.apply(currentSnapshot, animatingDifferences: true)

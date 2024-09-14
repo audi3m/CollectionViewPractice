@@ -1,5 +1,5 @@
 //
-//  Item.swift
+//  PracticeItem.swift
 //  CollectionViewPractice
 //
 //  Created by J Oh on 9/13/24.
@@ -7,7 +7,12 @@
 
 import Foundation
 
-enum Item: Hashable {
+enum Section: CaseIterable {
+    case main
+    case sub
+}
+
+enum PracticeItem: Hashable {
     case typeA(ItemA)
     case typeB(ItemB)
 }

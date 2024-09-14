@@ -42,7 +42,7 @@ final class AllTypeCell: UICollectionViewCell {
         }
     }
     
-    func configureData(with item: Item) {
+    func configureData(with item: PracticeItem) {
         switch item {
         case .typeA(let itemA):
             titleLabel.text = itemA.name
